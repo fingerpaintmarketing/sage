@@ -161,11 +161,11 @@ HTML;
 					$media = wp_get_attachment_image( $data['value'] );
 					$field .= <<<HTML
 {$media}<br />
-<a href="#" class="widget-base-remove-media">Remove media</a>
+<a href="#" class="fingerpaint-widget-remove-media">Remove media</a>
 HTML;
 				} else {
 					$field .= <<<HTML
-<input class="button widget-base-add-media" type="button" value="Add Media" />
+<input class="button fingerpaint-widget-add-media" type="button" value="Add Media" />
 HTML;
 				}
 		}
@@ -189,7 +189,7 @@ HTML;
 	 */
 	public function action_admin_print_scripts() {
 		wp_enqueue_media();
-		wp_enqueue_script( 'widget-base', get_template_directory_uri() . '/assets/js/widget_base.js' );
+		wp_enqueue_script( 'fingerpaint-widget', get_template_directory_uri() . '/assets/scripts/fingerpaint-widget.js' );
 	}
 
 	/**
