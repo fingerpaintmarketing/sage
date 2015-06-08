@@ -32,3 +32,6 @@ foreach ($sage_includes as $file) {
   require_once $filepath;
 }
 unset($file, $filepath);
+
+/* Initialize site theme. */
+Fingerpaint\Site_Theme::init();
