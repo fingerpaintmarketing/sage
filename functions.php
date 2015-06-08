@@ -1,4 +1,8 @@
 <?php
+
+/* Add Composer autoloader for custom code and vendor code. */
+require_once __DIR__ . '/vendor/autoload.php';
+
 /**
  * Sage includes
  *
