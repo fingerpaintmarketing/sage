@@ -60,7 +60,7 @@ class Site_Theme extends Theme {
 	 * @return void
 	 */
 	public static function action_widgets_init() {
-		register_widget( __NAMESPACE__ . '\Widget_Social_Link' );
+		register_widget( __NAMESPACE__ . '\\Widget_Social_Link' );
 	}
 
 	/**
