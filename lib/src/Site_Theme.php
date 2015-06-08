@@ -60,6 +60,18 @@ class Site_Theme extends Theme {
 	 * @return void
 	 */
 	public static function action_widgets_init() {
+
+		/* Register custom sidebars. */
+		register_sidebar( [
+			'name'          => __( 'Social Links', 'sage' ),
+			'id'            => 'sidebar-social-links',
+			'before_widget' => '<ul class="widget %1$s %2$s">',
+			'after_widget'  => '</ul>',
+			'before_title'  => '<h3>',
+			'after_title'   => '</h3>',
+		] );
+
+		/* Register custom widgets. */
 		register_widget( __NAMESPACE__ . '\\Widget_Social_Link' );
 	}
 
