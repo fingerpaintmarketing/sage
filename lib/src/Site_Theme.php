@@ -143,8 +143,9 @@ class Site_Theme extends Theme {
 				$function_call .= ', ' . $event['value'];
 			}
 
-			/* Close the function call. */
+			/* Close the function call and add it to the array of function calls. */
 			$function_call .= ');';
+			$ga_function_calls[] = $function_call;
 		}
 
 		/* Flatten function calls array into return-delimited string. */
