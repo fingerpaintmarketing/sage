@@ -28,20 +28,27 @@
             finalize: function () {
                 // JavaScript to be fired on all pages, after page specific JS is fired
             },
-            gaLogOutboundLink: function (event) {
-                ga('send', 'event', 'Outbound Links', 'Click', event.data.href);
+            gaLogEvent: function (event) {
+                // General event logging function, intended to be used with .on('click') event handlers
+                if (typeof event.data.label !== 'undefined') {
+                    if (typeof event.data.value !== 'undefined') {
+                        ga('send', 'event', event.data.category, event.data.action, event.data.label, event.data.value);
+                    } else {
+                        ga('send', 'event', event.data.category, event.data.action, event.data.label);
+                    }
+                } else {
+                    ga('send', 'event', event.data.category, event.data.action);
+                }
             },
             gaTrackOutboundLinks: function () {
                 // Listen for links that don't match the current base URL and fire an event when clicked
                 var currentUrl = window.location.href.substr(0, window.location.href.indexOf('/', 10));
                 $('a[href^="http"]').not('[href^="' + currentUrl + '"]').each(function () {
-                    $(this).on(
-                        'click',
-                        {
-                            href: this.href
-                        },
-                        Sage.common.gaLogOutboundLink
-                    );
+                    $(this).on('click', {
+                        category: 'Outbound Links',
+                        action: 'Click',
+                        label: this.href
+                    }, Sage.common.gaLogEvent);
                 });
             }
         }
