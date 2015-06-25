@@ -19,9 +19,30 @@
         'common': {
             init: function () {
                 // JavaScript to be fired on all pages
+
+                // Set up Google Analytics events
+                if (typeof ga === 'function') {
+                    Sage.common.gaTrackOutboundLinks();
+                }
             },
             finalize: function () {
                 // JavaScript to be fired on all pages, after page specific JS is fired
+            },
+            gaLogOutboundLink: function (event) {
+                ga('send', 'event', 'Outbound Links', 'Click', event.data.href);
+            },
+            gaTrackOutboundLinks: function () {
+                // Listen for links that don't match the current base URL and fire an event when clicked
+                var currentUrl = window.location.href.substr(0, window.location.href.indexOf('/', 10));
+                $('a[href^="http"]').not('[href^="' + currentUrl + '"]').each(function () {
+                    $(this).on(
+                        'click',
+                        {
+                            href: this.href
+                        },
+                        Sage.common.gaLogOutboundLink
+                    );
+                });
             }
         }
     };
