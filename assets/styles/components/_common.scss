@@ -1,0 +1,77 @@
+  // Differently colored bullets from text
+  ul {
+    padding: 0 0 0 15px;
+    list-style-type: none;
+    li {
+      line-height: 22px;
+      padding: 5px 0 5px 0;
+      position: relative;
+      &:before {
+        content: '\2022';
+        display: inline-block;
+        position: absolute;
+        font-size: 20px;
+        line-height: 16px;
+        left: -10px;
+        top: 8px;
+        color: $brand-primary;
+      }
+    }
+  }
+}
+
+// Responsive video - common js function dependent on .videoWrapper & sub iframe style
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// FOR RESPONSIVE JS BREAKPOINT READER
+// REQUIRES Sage.breakpoint.refreshValue();
+body {
+  &:before {
+    content: "base";
+    display: none;
+  }
+}
+
+@media (min-width: $screen-xs) {
+  body {
+    &:before {
+      content: "xs";
+    }
+  }
+}
+
+@media (min-width: $screen-sm) {
+  body {
+    &:before {
+      content: "sm";
+    }
+  }
+}
+
+@media (min-width: $screen-md) {
+  body {
+    &:before {
+      content: "md";
+    }
+  }
+}
+
+@media (min-width: $screen-lg) {
+  body {
+    &:before {
+      content: "lg";
+    }
+  }
+}
