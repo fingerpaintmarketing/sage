@@ -1,20 +1,23 @@
 // Differently colored bullets from text
-ul {
-  padding: 0 0 0 15px;
-  list-style-type: none;
-  li {
-    line-height: 22px;
-    padding: 5px 0 5px 0;
-    position: relative;
-    &:before {
-      content: '\2022';
-      display: inline-block;
-      position: absolute;
-      font-size: 20px;
-      line-height: 16px;
-      left: -10px;
-      top: 8px;
-      color: $brand-primary;
+// Differently colored bullets from text
+main{
+  ul {
+    padding: 0 0 0 15px;
+    list-style-type: none;
+    li {
+      line-height: 22px;
+      padding: 5px 0 5px 0;
+      position: relative;
+      &:before {
+        content: '\2022';
+        display: inline-block;
+        position: absolute;
+        font-size: 20px;
+        line-height: 16px;
+        left: -10px;
+        top: 8px;
+        color: $brand-primary;
+      }
     }
   }
 }
