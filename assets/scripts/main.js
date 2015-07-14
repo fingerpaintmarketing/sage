@@ -25,6 +25,11 @@
                     Sage.common.gaTrackOutboundLinks();
                 }
 
+                // Function to enable L1 navigation dropdown item links
+                // Tested on bootstrap 3.3.1
+                $('#menu-primary-navigation .dropdown').on('show.bs.dropdown', function (e) {
+                    e.preventDefault();
+                });
 
                 // requires .videoWrapper style
                 // change static sized iframe video to responsive sized ( add checks to apply for any other than Youtube)
