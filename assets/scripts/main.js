@@ -23,6 +23,7 @@
                 // Set up Google Analytics events
                 if (typeof ga === 'function') {
                     Sage.common.gaTrackDocumentLinks();
+                    Sage.common.gaTrackMailtoLinks();
                     Sage.common.gaTrackOutboundLinks();
                 }
 
@@ -72,7 +73,7 @@
             gaTrackDocumentLinks: function () {
 
                 // Set up tracking on clicks on documents, such as PDFs
-                $('a').filter(function () {
+                $('a:not([href^="mailto"])').filter(function () {
 
                     // If this anchor doesn't have an HREF, ignore it.
                     if (typeof this.href !== 'string') {
@@ -92,7 +93,18 @@
                         category: 'Downloads',
                         action: this.href.substr(this.href.lastIndexOf('.') + 1).toUpperCase(),
                         label: this.href.substr(this.href.lastIndexOf('/') + 1)
-                    }, Roots.common.gaLogEvent);
+                    }, Sage.common.gaLogEvent);
+                });
+            },
+            gaTrackMailtoLinks: function () {
+
+                // Listen for links that start with mailto: and fire an event when clicked
+                $('a[href^="mailto:"]').each(function () {
+                    $(this).on('click', {
+                        category: 'Mailto Intent',
+                        action: 'Click',
+                        label: this.href.substr(7)
+                    }, Sage.common.gaLogEvent);
                 });
             },
             gaTrackOutboundLinks: function () {
