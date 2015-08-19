@@ -22,6 +22,7 @@
 
                 // Set up Google Analytics events
                 if (typeof ga === 'function') {
+                    Sage.common.gaTrackDocumentLinks();
                     Sage.common.gaTrackOutboundLinks();
                 }
 
@@ -67,6 +68,32 @@
                 } else {
                     ga('send', 'event', event.data.category, event.data.action);
                 }
+            },
+            gaTrackDocumentLinks: function () {
+
+                // Set up tracking on clicks on documents, such as PDFs
+                $('a').filter(function () {
+
+                    // If this anchor doesn't have an HREF, ignore it.
+                    if (typeof this.href !== 'string') {
+                        return false;
+                    }
+
+                    // Try to split the HREF into pathinfo sements.
+                    var pathinfo = this.href.split('/');
+                    if (pathinfo.length === 0) {
+                        return false;
+                    }
+
+                    // If the last segment contains a period, then it is most likely a document. Set up tracking.
+                    return (pathinfo[pathinfo.length - 1].indexOf('.') > 0);
+                }).each(function () {
+                    $(this).on('click', {
+                        category: 'Downloads',
+                        action: this.href.substr(this.href.lastIndexOf('.') + 1).toUpperCase(),
+                        label: this.href.substr(this.href.lastIndexOf('/') + 1)
+                    }, Roots.common.gaLogEvent);
+                });
             },
             gaTrackOutboundLinks: function () {
                 // Listen for links that don't match the current base URL and fire an event when clicked
