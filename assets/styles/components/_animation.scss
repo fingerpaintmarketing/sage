@@ -1,0 +1,39 @@
+//ANIMATION
+
+
+
+
+
+//MIXIN TRANSITIONS
+
+@mixin ease-out($time: 600ms) {
+  transition: all $time cubic-bezier(0.165, 0.84, 0.44, 1);
+  //alternate
+  //transition: all $time cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@mixin ease-in($time: 600ms) {
+  transition: all $time cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  //alternate
+  //transition: all $time cubic-bezier(0.755, 0.05, 0.855, 0.06);
+}
+
+@mixin ease-in-out($time: 600ms) {
+  transition: all $time cubic-bezier(0.645, 0.045, 0.355, 1);
+  //smooth
+  //transition: all $time cubic-bezier(0.645, 0.045, 0.355, 1);
+  //snappy
+  //transition: all $time cubic-bezier(1, 0, 0, 1);
+}
+
+@mixin ease-bounce-out($time: 600ms) {
+  transition: all $time cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+@mixin ease-bounce-in($time: 600ms) {
+  transition: all $time cubic-bezier(0.6, -0.28, 0.735, 0.045); 
+}
+
+@mixin ease-bounce-in-out($time: 600ms) {
+  transition: all $time cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+}
