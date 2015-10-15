@@ -1,1 +1,29 @@
+//yanno
 
+body{
+  &:after{
+    content:'base';
+    display:block;
+    position:fixed;
+    bottom:0;
+    border-radius: 5px;
+    background-color:rgba(255, 0, 0, 0.35);
+    padding:10px;
+
+    @media (min-width: $screen-xs) {
+      content: "xs";
+    }
+
+    @media (min-width: $screen-sm) {
+      content: "sm";
+    }
+
+    @media (min-width: $screen-md) {
+      content: "md";
+    }
+
+    @media (min-width: $screen-lg) {
+      content: "lg";
+    }
+  }
+}

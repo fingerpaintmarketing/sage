@@ -39,21 +39,22 @@
                     $("iframe[src^='http://www.youtube.com'], iframe[src^='https://www.youtube.com']").removeAttr('height').removeAttr('width').wrap("<div class='videoWrapper'></div>");
                 }
 
-
-                // RESPONSIVE BREAKPOINT READER
-                Sage.breakpoint.refreshValue();
-                // UNCOMMENT THIS SECTION IF YOU WANT TO READ BREAKPOINT ON RESIZE
-                // REQUIRES CLASSES LOCATED IN: _common.scss
-                // $(window).resize(function () {
-                //     Sage.breakpoint.refreshValue();
-                //     //TEST VIEW BREAKPOINT
-                //     //console.log( Sage.breakpoint.value);
-                // }).resize();
-
+                // Uncomment this section if using breakpoints in JavaScript.
+                // Update breakpoint value cache on window resize.
+                //$(window).resize(function () {
+                //    Sage.common.breakpoint.refreshValue();
+                //}).resize();
 
                 // RESPONSIVE TABLE FIXER
                 // UNCOMMENT THIS SECTION IF YOU WANT RESPONSIVE TABLES
                 //Sage.responsiveTable();
+            },
+            breakpoint : {
+                refreshValue: function () {
+                    this.value = window.getComputedStyle(
+                        document.querySelector('body'), ':before'
+                    ).getPropertyValue('content').replace(/['"]+/g, '');
+                }
             },
             finalize: function () {
                 // JavaScript to be fired on all pages, after page specific JS is fired
@@ -154,8 +155,9 @@
                     }
                 });
             }
+
         },
-        breakpoint : {
+        breakpoint: {
             refreshValue: function () {
                 this.value = window.getComputedStyle(
                     document.querySelector('body'), ':before'
