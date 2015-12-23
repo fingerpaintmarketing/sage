@@ -253,6 +253,10 @@
 
                     // Set up a listener for jump link clicks within the sticky footer.
                     this.element.on('click', 'a[href^="#"]', this.handleJumpLinks);
+
+                    // Set up a listener for input focus and blur events.
+                    this.document.on('focus', 'input, select', this.hideOnInputFocus);
+                    this.document.on('blur', 'input, select', this.showOnInputBlur);
                 },
 
                 /**
@@ -268,6 +272,17 @@
                     $('html, body').animate({
                         scrollTop: $($(this).attr('href')).offset().top
                     }, 0);
+                },
+
+                /**
+                 * A function to handle the input focus event. Hides the sticky footer, if stuck.
+                 *
+                 * @return void
+                 */
+                hideOnInputFocus: function () {
+                    if (Sage.common.stickyFooter.stuck === true) {
+                        Sage.common.stickyFooter.element.hide();
+                    }
                 },
 
                 /**
@@ -299,6 +314,15 @@
                             Sage.common.stickyFooter.unstick();
                         }
                     }
+                },
+
+                /**
+                 * A function to handle the input blur event. Shows the sticky footer.
+                 *
+                 * @return void
+                 */
+                showOnInputBlur: function () {
+                    Sage.common.stickyFooter.element.show();
                 },
 
                 /**
