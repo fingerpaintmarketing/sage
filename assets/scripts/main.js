@@ -250,6 +250,24 @@
 
                     // Set up a listener specifically for resize to update window height and poll.
                     this.window.on('resize', this.updateViewport);
+
+                    // Set up a listener for jump link clicks within the sticky footer.
+                    this.element.on('click', 'a[href^="#"]', this.handleJumpLinks);
+                },
+
+                /**
+                 * A function to handle jump link clicks without breaking the sticky footer.
+                 *
+                 * @param e The click event.
+                 *
+                 * @return void
+                 */
+                handleJumpLinks: function (e) {
+                    e.preventDefault();
+                    Sage.common.stickyFooter.unstick();
+                    $('html, body').animate({
+                        scrollTop: $($(this).attr('href')).offset().top
+                    }, 0);
                 },
 
                 /**
