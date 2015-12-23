@@ -12,6 +12,7 @@ body.has-stuck-footer {
     height: $sticky-footer-height;
     overflow-y: scroll;
     position: fixed;
+    width: 100%;
 
     .hide-when-stuck {
       display: none;
