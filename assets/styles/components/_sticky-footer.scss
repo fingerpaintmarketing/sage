@@ -1,0 +1,28 @@
+// Configuration for the height of the sticky footer as a percentage of viewport height.
+// If updating this value, you will also need to update the value in main.js in the init call.
+$sticky-footer-height: 25vh;
+
+body.has-stuck-footer {
+  padding-bottom: $sticky-footer-height !important;
+}
+
+.sticky-footer {
+  &.stuck {
+    bottom: 0;
+    height: $sticky-footer-height;
+    overflow-y: scroll;
+    position: fixed;
+
+    .hide-when-stuck {
+      display: none;
+    }
+
+    .hide-when-unstuck {
+      display: block;
+    }
+  }
+
+  .hide-when-unstuck {
+    display: none;
+  }
+}
