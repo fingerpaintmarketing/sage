@@ -48,6 +48,12 @@
                 // RESPONSIVE TABLE FIXER
                 // UNCOMMENT THIS SECTION IF YOU WANT RESPONSIVE TABLES
                 //Sage.responsiveTable();
+
+                // To use sticky footer functionality:
+                // If desired, update 1/3 in the function call below to match the vh you want (preconfigured as 1/3 viewport height)
+                // If updating the value below, the corresponding vh variable in _sticky-footer.scss will need to be updated.
+                // Uncomment this line:
+                //Sage.common.stickyFooter.init('.sticky-footer', 1/3);
             },
             breakpoint : {
                 refreshValue: function () {
@@ -118,6 +124,158 @@
                         label: this.href
                     }, Sage.common.gaLogEvent);
                 });
+            },
+            stickyFooter: {
+
+                /**
+                 * @var A variable to keep track of the height of the document.
+                 */
+                documentHeight: 0,
+
+                /**
+                 * @var A variable to keep track of the bottom position of the selected element.
+                 */
+                elementBottom: 0,
+
+                /**
+                 * @var A variable to keep track of the top position of the selected element.
+                 */
+                elementTop: 0,
+
+                /**
+                 * @var A variable to keep track of whether the sticky footer is currently stuck.
+                 */
+                stuck: false,
+
+                /**
+                 * @var A variable to keep track of the target percentage for sticky footer visibility.
+                 */
+                targetPercent: 0,
+
+                /**
+                 * @var A variable to keep track of the number of pixels from the bottom of the element are visible.
+                 */
+                visibleBottom: 0,
+
+                /**
+                 * @var A variable to keep track of the percentage of the screen the unstuck footer takes up.
+                 */
+                visiblePercent: 0,
+
+                /**
+                 * @var A variable to keep track of the number of pixels the unstuck footer takes up.
+                 */
+                visiblePixels: 0,
+
+                /**
+                 * @var A variable to keep track of the number of pixels from the top of the element are visible.
+                 */
+                visibleTop: 0,
+
+                /**
+                 * @var A variable to keep track of the viewport height.
+                 */
+                windowHeight: 0,
+
+                /**
+                 * @var A variable to keep track of the scrolled pixel distance relative to the bottom of the viewport.
+                 */
+                windowScrollBottom: 0,
+
+                /**
+                 * @var A variable to keep track of the scrolled pixel distance relative to the top of the viewport.
+                 */
+                windowScrollTop: 0,
+
+                /**
+                 * Initialization function. Sets up object references and begins tracking.
+                 *
+                 * @param selector The jQuery selector to use.
+                 * @param percentage The percentage of the screen that the footer should take up.
+                 *
+                 * @return void
+                 */
+                init: function (selector, percentage) {
+
+                    // Configure target percentage.
+                    this.targetPercent = percentage;
+
+                    // Set up local caches of objects.
+                    this.document = $(document);
+                    this.element = $(selector);
+                    this.elementParent = this.element.parent();
+                    this.window = $(window);
+                    this.windowHeight = this.window.height();
+
+                    // Set up a listener for various actions that would affect object position.
+                    this.window.on('DOMContentLoaded load scroll', this.poll);
+
+                    // Set up a listener specifically for resize to update window height and poll.
+                    this.window.on('resize', this.updateViewport);
+                },
+
+                /**
+                 * Polling function. Updates tracking information about positioning and determines whether to change state.
+                 *
+                 * @return void
+                 */
+                poll: function () {
+
+                    // Always keep window scrollTop and window scrollBottom up to date.
+                    Sage.common.stickyFooter.windowScrollTop = Sage.common.stickyFooter.window.scrollTop();
+                    Sage.common.stickyFooter.windowScrollBottom = Sage.common.stickyFooter.windowScrollTop + Sage.common.stickyFooter.windowHeight;
+
+                    // If the footer isn't stuck, update position tracking variables for the sticky footer.
+                    if (!Sage.common.stickyFooter.stuck) {
+                        Sage.common.stickyFooter.elementTop = Sage.common.stickyFooter.element.offset().top;
+                        Sage.common.stickyFooter.elementBottom = Sage.common.stickyFooter.elementTop + Sage.common.stickyFooter.element.outerHeight();
+                        Sage.common.stickyFooter.visibleTop = Sage.common.stickyFooter.elementTop < Sage.common.stickyFooter.windowScrollTop ? Sage.common.stickyFooter.windowScrollTop : Sage.common.stickyFooter.elementTop;
+                        Sage.common.stickyFooter.visibleBottom = Sage.common.stickyFooter.elementBottom > Sage.common.stickyFooter.windowScrollBottom ? Sage.common.stickyFooter.windowScrollBottom : Sage.common.stickyFooter.elementBottom;
+                        Sage.common.stickyFooter.visiblePixels = Sage.common.stickyFooter.visibleBottom - Sage.common.stickyFooter.visibleTop;
+                        Sage.common.stickyFooter.visiblePercent = Sage.common.stickyFooter.visiblePixels / Sage.common.stickyFooter.windowHeight;
+
+                        // Determine if the visible percent is less than the target - if so, stick.
+                        if (Sage.common.stickyFooter.visiblePercent < Sage.common.stickyFooter.targetPercent) {
+                            Sage.common.stickyFooter.stick();
+                        }
+                    } else {
+                        if (Sage.common.stickyFooter.windowScrollBottom >= Sage.common.stickyFooter.document.height()) {
+                            Sage.common.stickyFooter.unstick();
+                        }
+                    }
+                },
+
+                /**
+                 * A function to transition the sticky footer from an unstuck state to a stuck state.
+                 *
+                 * @return void
+                 */
+                stick: function () {
+                    this.stuck = true;
+                    this.element.addClass('stuck');
+                    this.elementParent.addClass('has-stuck-footer');
+                },
+
+                /**
+                 * A function to transition the sticky footer from a stuck state to an unstuck state.
+                 *
+                 * @return void
+                 */
+                unstick: function () {
+                    this.stuck = false;
+                    this.element.removeClass('stuck');
+                    this.elementParent.removeClass('has-stuck-footer');
+                },
+
+                /**
+                 * A function to handle viewport resizes.
+                 *
+                 * @return void
+                 */
+                updateViewport: function () {
+                    Sage.common.stickyFooter.windowHeight = Sage.common.stickyFooter.window.height();
+                    Sage.common.stickyFooter.poll();
+                }
             }
         },
         responsiveTable: function () {
