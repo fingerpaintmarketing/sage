@@ -47,13 +47,15 @@
 
                 // RESPONSIVE TABLE FIXER
                 // UNCOMMENT THIS SECTION IF YOU WANT RESPONSIVE TABLES
-                //Sage.responsiveTable();
+                //Sage.common.responsiveTable();
 
                 // To use sticky footer functionality:
-                // If desired, update 1/3 in the function call below to match the vh you want (preconfigured as 1/3 viewport height)
+                // Include sticky-footer.php template instead of footer.php template
+                // Uncomment line in main.scss to include _sticky-footer.scss
+                // If desired, update 1/3 in the function call below to match the vh you want (preconfigured as 1/4 viewport height)
                 // If updating the value below, the corresponding vh variable in _sticky-footer.scss will need to be updated.
                 // Uncomment this line:
-                //Sage.common.stickyFooter.init('.sticky-footer', 1/3);
+                //Sage.common.stickyFooter.init('.sticky-footer', 1/4);
             },
             breakpoint : {
                 refreshValue: function () {
@@ -124,6 +126,42 @@
                         label: this.href
                     }, Sage.common.gaLogEvent);
                 });
+            },
+            responsiveTable: function () {
+                if ($('table').length) {
+                    // just get the user created tables
+                    $table = $('table').not('.crayon-table');
+
+                    //first fix any tables without theads
+                    $($table).each(function () {
+                        $hasHead = $('thead td, thead th', this).length;
+                        if (!$hasHead) {
+                            $(this).prepend('<thead></thead>').find("tr:first").prependTo($('thead', this));
+                        }
+                    });
+
+                    //second update tables to have data attrs
+                    $($table).each(function () {
+                        $hasHead = $('thead td, thead th', this).length;
+                        $col_titles = [];
+
+                        if ($hasHead) {//make sure our current table has what we need to get started.
+                            // cache our column titles (include td for bad html)
+                            $(this).find('th, td').each(function () {
+                                $content = $(this).text() + ': ';
+                                $col_titles.push($content);
+                            });
+
+                            // add our column titles to data attrs on each tr>td
+                            $(this).find('tr').each(function () {
+                                $row = $(this);
+                                $row.children("td").each(function (key) {
+                                    $(this).attr('data-label', $col_titles[key]);
+                                });
+                            });
+                        }
+                    });
+                }
             },
             stickyFooter: {
 
@@ -277,43 +315,6 @@
                     Sage.common.stickyFooter.poll();
                 }
             }
-        },
-        responsiveTable: function () {
-            if ($('table').length) {
-                // just get the user created tables
-                $table = $('table').not('.crayon-table');
-
-                //first fix any tables without theads
-                $($table).each(function () {
-                    $hasHead = $('thead td, thead th', this).length;
-                    if (!$hasHead) {
-                        $(this).prepend('<thead></thead>').find("tr:first").prependTo($('thead', this));
-                    }
-                });
-
-                //second update tables to have data attrs
-                $($table).each(function () {
-                    $hasHead = $('thead td, thead th', this).length;
-                    $col_titles = [];
-
-                    if ($hasHead) {//make sure our current table has what we need to get started.
-                        // cache our column titles (include td for bad html)
-                        $(this).find('th, td').each(function () {
-                            $content = $(this).text() + ': ';
-                            $col_titles.push($content);
-                        });
-
-                        // add our column titles to data attrs on each tr>td
-                        $(this).find('tr').each(function () {
-                            $row = $(this);
-                            $row.children("td").each(function (key) {
-                                $(this).attr('data-label', $col_titles[key]);
-                            });
-                        });
-                    }
-                });
-            }
-
         }
     };
 
