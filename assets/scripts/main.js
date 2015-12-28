@@ -252,11 +252,12 @@
                     this.window.on('resize', this.updateViewport);
 
                     // Set up a listener for jump link clicks within the sticky footer.
-                    this.element.on('click', 'a[href^="#"]', this.handleJumpLinks);
+                    this.document.on('click', 'a[href^="#"]', this.handleJumpLinks);
 
-                    // Set up a listener for input focus and blur events.
+                    // Set up a listener to hide and show the sticky footer on form events.
                     this.document.on('focus', 'input, select', this.hideOnInputFocus);
                     this.document.on('blur', 'input, select', this.showOnInputBlur);
+                    this.document.on('submit', 'form', this.showOnInputBlur);
                 },
 
                 /**
