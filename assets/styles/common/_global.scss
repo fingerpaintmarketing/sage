@@ -27,3 +27,25 @@ body{
     }
   }
 }
+
+// Extensible class for independently styled unordered list item bullets
+.magic-bullet {
+  &:not(.gform_fields):not(.gfield_checkbox) {
+    list-style-type: none;
+    overflow: hidden;
+    padding-left: 15px;
+
+    li {
+      padding: 0;
+      position: relative;
+
+      &:before {
+        color: $brand-primary-light;
+        content: '\2022';
+        display: inline-block;
+        left: -15px;
+        position: absolute;
+      }
+    }
+  }
+}
