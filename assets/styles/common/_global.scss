@@ -40,8 +40,8 @@ body{
       position: relative;
 
       &:before {
-        color: $brand-primary-light;
-        content: '\2022';
+        color: $brand-primary;
+        content: '•';
         display: inline-block;
         left: -15px;
         position: absolute;
