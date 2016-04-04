@@ -1,0 +1,138 @@
+/**
+ * These styles are intended to be used with the default Gravity Forms styles disabled.
+ *
+ * Enabling infield top labels:
+ *   - Set sublabels to display above form fields in the general settings at the form level.
+ *   - Give standalone text-based fields a custom class of infield-toplabel in the Gravity Forms editor.
+ *
+ * To hide the parent label:
+ *   - Give the field a custom class of gform_hidden_label in the Gravity Forms editor.
+ *   - This is useful for checkboxes (which already have labels) or fields like Name where labels are duplicative.
+ */
+
+.infield-toplabel {
+  display: block;
+  position: relative;
+
+  input {
+    margin-bottom: 1em;
+    max-width: 320px;
+    padding: 1em .5em .5em;
+    width: 100%;
+  }
+
+  label {
+    color: $gray-light;
+    font-size: .75em;
+    left: .95em;
+    line-height: .75em;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: .5em;
+  }
+}
+
+.gfield_checkbox,
+.gform_fields {
+  list-style: none;
+  padding: 0;
+}
+
+.gfield {
+  position: relative;
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="reset"]):not([type="submit"]) {
+    border: 1px solid $gray-light;
+  }
+}
+
+.gfield_checkbox {
+  input {
+    vertical-align: top;
+  }
+
+  label {
+    margin: 0 0 1em .5em;
+    max-width: 300px;
+    width: 90%;
+  }
+}
+
+.gfield_error {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="reset"]):not([type="submit"]) {
+    border-color: $alert-danger-text;
+  }
+
+  label {
+    color: $alert-danger-text !important;
+  }
+}
+
+.gfield_html_formatted {
+  margin-bottom: 1em;
+}
+
+.gform_ajax_spinner {
+  display: none;
+}
+
+.gform_footer {
+  margin-bottom: 2em;
+
+  input[type="submit"] {
+    @extend .btn;
+    @extend .btn-primary;
+  }
+}
+
+.gform_hidden_label {
+  > label {
+    display: none;
+  }
+}
+
+.gform_validation_container {
+  display: none;
+}
+
+.gform_wrapper {
+  @media (min-width: $screen-md-min) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 320px + 320px + $grid-gutter-width;
+  }
+}
+
+.ginput_complex {
+  span {
+    @extend .infield-toplabel;
+  }
+}
+
+.ginput_container_select {
+  display: inline-block;
+  margin: 0 0 1em .5em;
+}
+
+.validation_error,
+.validation_message {
+  @extend .alert;
+  @extend .alert-danger;
+}
+
+.validation_error {
+  margin-top: 1em;
+  max-width: 320px + 320px + $grid-gutter-width / 2;
+}
+
+.validation_message {
+  padding: .5em;
+
+  @media (min-width: $screen-sm-min) {
+    left: 320px + $grid-gutter-width / 2;
+    position: absolute;
+    top: 0;
+    width: 320px;
+  }
+}
