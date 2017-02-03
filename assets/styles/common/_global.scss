@@ -1,51 +1,72 @@
-//yanno
-
-body{
+// yanno utility
+html{
+  &:before{
+    z-index: 999999999;
+    font-size:14px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    content:'1x';
+    display:block;
+    position:fixed;
+    bottom:0;
+    right:0;
+    border-radius: 5px 0 0 0;
+    background-color:rgba(0,0,0, 0.3);
+    color:rgba(255, 255, 255, 0.8);
+    padding:5px;
+    @media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2){
+      content:'2x';
+    }
+    @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3){
+      content:'3x';
+    }
+  }
   &:after{
+    z-index: 999999999;
+    font-size:14px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
     content:'base';
     display:block;
     position:fixed;
     bottom:0;
-    border-radius: 5px;
-    background-color:rgba(255, 0, 0, 0.35);
-    padding:10px;
-
-    @media (min-width: $screen-xs) {
-      content: "xs";
-    }
-
-    @media (min-width: $screen-sm) {
-      content: "sm";
-    }
-
-    @media (min-width: $screen-md) {
-      content: "md";
-    }
-
-    @media (min-width: $screen-lg) {
-      content: "lg";
-    }
+    left:0;
+    border-radius:0 5px 0 0;
+    background-color:rgba(0,0,0,0.3);
+    color:rgba(255,255,255,0.8);
+    padding:5px;
+    @media (min-width: $screen-xs) {content: "xs / #{$screen-xs}";}
+    @media (min-width: $screen-sm) {content: "sm / #{$screen-sm}";}
+    @media (min-width: $screen-md) {content: "md / #{$screen-md}";}
+    @media (min-width: $screen-lg) {content: "lg / #{$screen-lg}";}
   }
 }
 
-// Extensible class for independently styled unordered list item bullets
-.magic-bullet {
-  &:not(.gform_fields):not(.gfield_checkbox) {
-    list-style-type: none;
-    overflow: hidden;
-    padding-left: 15px;
 
-    li {
-      padding: 0;
-      position: relative;
-
-      &:before {
-        color: $brand-primary;
-        content: '•';
-        display: inline-block;
-        left: -15px;
-        position: absolute;
-      }
-    }
+// DO NOT REMOVE
+// FOR RESPONSIVE JS BREAKPOINT READER
+// REQUIRES Sage.breakpoint.refreshValue();
+body {
+  &:before {
+    content: "0";
+    display: none;
+  }
+}
+@media (min-width: $screen-xs) {
+  body {
+    &:before {content: "1";}
+  }
+}
+@media (min-width: $screen-sm) {
+  body {
+    &:before {content: "2";}
+  }
+}
+@media (min-width: $screen-md) {
+  body {
+    &:before {content: "3";}
+  }
+}
+@media (min-width: $screen-lg) {
+  body {
+    &:before {content: "4";}
   }
 }

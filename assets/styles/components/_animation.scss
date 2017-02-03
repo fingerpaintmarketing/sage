@@ -1,6 +1,6 @@
-//ANIMATION
+//DEFAULT ANIMATIONS
 
-
+a{transition:color 0.3s ease;}
 
 
 
@@ -27,13 +27,13 @@
 }
 
 @mixin ease-bounce-out($time: 600ms) {
-  transition: all $time cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  transition: all $time cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @mixin ease-bounce-in($time: 600ms) {
-  transition: all $time cubic-bezier(0.6, -0.28, 0.735, 0.045); 
+  transition: all $time cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
 @mixin ease-bounce-in-out($time: 600ms) {
-  transition: all $time cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+  transition: all $time cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
