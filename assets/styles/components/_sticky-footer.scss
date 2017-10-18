@@ -1,29 +1,100 @@
-// Configuration for the height of the sticky footer as a percentage of viewport height.
-// If updating this value, you will also need to update the value in main.js in the init call.
-$sticky-footer-height: 25vh;
-
-body.has-stuck-footer {
-  padding-bottom: $sticky-footer-height !important;
-}
-
-.sticky-footer {
-  &.stuck {
-    bottom: 0;
-    height: $sticky-footer-height;
-    overflow-y: scroll;
+#isi {
+  #isi_sticky {
+    visibility: hidden;
     position: fixed;
+    z-index: 999;
     width: 100%;
-
-    .hide-when-stuck {
-      display: none;
+    height: 25vh;
+    min-height: 170px;
+    background-color: $body-bg;
+    box-shadow: 0 25px 30px 20px rgba(0, 0, 0, 0.65);
+    .sticky-isi,
+    .sticky_content {
+      height: 100%;
     }
-
-    .hide-when-unstuck {
-      display: block;
+    .isi-wrapper {
+      padding: 10px 15px;
+      position: relative;
+      @media (min-width: $screen-sm) {
+        padding: 10px 0;
+      }
+    }
+    .sticky-isi {
+      border-bottom-left-radius: unset;
+      box-shadow: unset;
+    }
+    &.show {
+      visibility: visible;
+      .toggle-isi:not(i) {
+        display: block;
+      }
+    }
+    .scroll-container {
+      position: relative;
+      height: 21vh;
+      overflow: auto;
+      @include clearfix();
     }
   }
 
-  .hide-when-unstuck {
-    display: none;
+  .expand_isi {
+    background-color: #fff;
+    overflow: hidden;
+  }
+
+  .expand_isi_text {
+    font-size: 16px;
+    h2 {
+      float: left;
+      padding: 7px 0 0;
+      margin: 0;
+    }
+  }
+  .expand_isi_view {
+    width: 30px;
+    height: 26px;
+    font-size: 30px;
+    line-height: 1;
+    text-align: center;
+    color: $text-color;
+    float: right;
+    cursor: pointer;
+
+    i {
+      position: relative;
+      top: -6px;
+      &:before {
+        top: 0;
+        left: 0;
+      }
+    }
+  }
+
+  .expand-isi-content {
+    @extend .container;
+    span.view-full {
+      display: none;
+      @media (min-width: $screen-xs) {
+        display: inline-block;
+      }
+    }
+  }
+
+  .ISI-container {
+    @extend .container;
+    color: $text-color;
+
+    @media (max-width: $screen-xs-max) {
+      padding: 0;
+    }
+    &.clone_target {
+      padding: 30px 15px;
+    }
+    .ISI-content {
+      margin: auto;
+      width: 100%;
+      padding: 0;
+      color: #333;
+    }
   }
 }
